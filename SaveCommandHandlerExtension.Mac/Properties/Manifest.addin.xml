@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionModel>
+    <Extension path="/MonoDevelop/Ide/TypeService/MefHostServices">
+        <Assembly file ="SaveCommandHandlerExtension.dll" />
+    </Extension>
+    <Extension path="/MonoDevelop/Ide/TypeService/PlatformMefHostServices">
+        <Assembly file ="SaveCommandHandlerExtension.dll" />
+    </Extension>
+</ExtensionModel>
