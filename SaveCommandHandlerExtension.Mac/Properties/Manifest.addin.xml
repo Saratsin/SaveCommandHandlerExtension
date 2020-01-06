@@ -6,4 +6,7 @@
     <Extension path="/MonoDevelop/Ide/TypeService/PlatformMefHostServices">
         <Assembly file ="SaveCommandHandlerExtension.dll" />
     </Extension>
+    <Extension path="/MonoDevelop/Ide/StartupHandlers">
+        <Class class="SaveCommandHandlerExtension.Mac.StartupHandler" />
+    </Extension>
 </ExtensionModel>

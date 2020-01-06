@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.Commanding;
+using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.VisualStudio.Text.Editor.Commanding;
 using Microsoft.VisualStudio.Text.Editor.Commanding.Commands;
 using Microsoft.VisualStudio.Utilities;
 using System;
@@ -17,20 +17,21 @@ namespace SaveCommandHandlerExtension
     {
         public string DisplayName => nameof(SaveCommandHandler);
 
-        private readonly IEditorCommandHandlerServiceFactory _editorCommandHandlerServiceFactory;
-
         [ImportingConstructor]
-        public SaveCommandHandler(IEditorCommandHandlerServiceFactory editorCommandHandlerServiceFactory)
+        public SaveCommandHandler()
         {
-            _editorCommandHandlerServiceFactory = editorCommandHandlerServiceFactory;
         }
 
         public bool ExecuteCommand(SaveCommandArgs args, CommandExecutionContext executionContext)
         {
             try
             {
-                var service = _editorCommandHandlerServiceFactory.GetService(args.TextView);
-                Debug.WriteLine($"I am executing something on save with {service.GetType()}");
+                var textBuffer = args.SubjectBuffer;
+                var currentSnapshot = textBuffer.CurrentSnapshot;
+                var rawText = currentSnapshot.GetText();
+                var newText = rawText + "\n// I am executing something on save";
+                var replaceSpan = new Span(0, rawText.Length);
+                textBuffer.Replace(replaceSpan, newText);
             }
             catch (Exception ex)
             {
@@ -44,6 +45,5 @@ namespace SaveCommandHandlerExtension
         {
             return CommandState.Available;
         }
-
     }
 }
